@@ -19,14 +19,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	long id;
+	Long id;
 	@Column(nullable = false)
 	String name;
-	@Column(nullable = false)
+	@Column(nullable = false,unique = true)
 	String phone;
 	@Column(nullable = false)
 	String password;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	String userName;
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -83,6 +83,40 @@ public class User {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof User)) {
+			return false;
+		}
+		User other = (User) obj;
+		if (phone == null) {
+			if (other.getPhone() != null) {
+				return false;
+			}
+		} else if (!phone.equals(other.getPhone())) {
+			return false;
+		}
+		if (userName == null) {
+			if (other.getUserName() != null) {
+				return false;
+			}
+		} else if (!userName.equals(other.getUserName())) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 	
 }

@@ -20,7 +20,7 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	Long id;
-	@Column(nullable = false)
+	@Column(nullable = false,unique = true)
 	String name;
 	LocalDate expirationDate;
 	@CreationTimestamp
@@ -68,6 +68,40 @@ public class Product {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((creatDateTime == null) ? 0 : creatDateTime.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Product)) {
+			return false;
+		}
+		Product other = (Product) obj;
+		if (creatDateTime == null) {
+			if (other.getCreatDateTime() != null) {
+				return false;
+			}
+		} else if (!creatDateTime.equals(other.getCreatDateTime())) {
+			return false;
+		}
+		if (name == null) {
+			if (other.getName() != null) {
+				return false;
+			}
+		} else if (!name.equals(other.getName())) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 	
 	

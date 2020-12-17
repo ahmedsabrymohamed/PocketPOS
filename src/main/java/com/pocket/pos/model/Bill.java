@@ -13,16 +13,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
+@Table(name="pos_bill")
 public  class Bill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	long id;
-	@Column(nullable = false)
+	Long id;
+	@Column(nullable = false , unique = true)
 	int billNumber;
 	@Column(nullable = false)
 	Long total;
@@ -135,6 +137,31 @@ public  class Bill {
 	public void setSecondParty(BillSecondParty secondParty) {
 		this.secondParty = secondParty;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + billNumber;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Bill)) {
+			return false;
+		}
+		Bill other = (Bill) obj;
+		if (billNumber != other.billNumber) {
+			return false;
+		}
+		return true;
+	}
+
+	
 	
 	
 }

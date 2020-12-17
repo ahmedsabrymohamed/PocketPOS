@@ -48,12 +48,6 @@ public class BillItem {
 		return id;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof Bulk)) {
-			return false;
-		}
-		return ((Bulk) obj).buyPrice == this.price && ((Bulk) obj).quantity == this.quantity;
-	}
+	
 
 }

@@ -7,18 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
+@Table(name="pos_bill_second_party")
 public class BillSecondParty {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	long id;
+	Long id;
 	@Column(nullable = false)
 	String name;
-	@Column(nullable = false)
+	@Column(nullable = false,unique = true)
 	String phone;
 	@CreationTimestamp
 	LocalDateTime creatDateTime;
@@ -65,5 +67,32 @@ public class BillSecondParty {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof BillSecondParty)) {
+			return false;
+		}
+		BillSecondParty other = (BillSecondParty) obj;
+		if (phone == null) {
+			if (other.getPhone() != null) {
+				return false;
+			}
+		} else if (!phone.equals(other.getPhone())) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 	
 }
