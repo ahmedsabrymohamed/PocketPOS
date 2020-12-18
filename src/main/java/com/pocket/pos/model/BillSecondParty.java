@@ -17,17 +17,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class BillSecondParty {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	Long id;
+	private Long id;
 	@Column(nullable = false)
-	String name;
+	private String name;
 	@Column(nullable = false,unique = true)
-	String phone;
+	private String phone;
 	@CreationTimestamp
-	LocalDateTime creatDateTime;
+	private LocalDateTime creatDateTime;
 	@UpdateTimestamp
-	LocalDateTime updateDateTime;
+	private LocalDateTime updateDateTime;
 	@Column(nullable = false)
-	boolean deleted;
+	private boolean deleted;
 	
 	
 	

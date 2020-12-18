@@ -19,31 +19,31 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	Long id;
+	private Long id;
 	@Column(nullable = false)
-	String name;
+	private String name;
 	@Column(nullable = false,unique = true)
-	String phone;
+	private String phone;
 	@Column(nullable = false)
-	String password;
+	private String password;
 	@Column(nullable = false, unique = true)
-	String userName;
+	private String userName;
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	Role role;
+	private Role role;
 	@Column(nullable = false)
-	boolean deleted;
+	private boolean deleted = false;
 	@CreationTimestamp
-	LocalDateTime creatDateTime;
+	private LocalDateTime creatDateTime;
 	@UpdateTimestamp
-	LocalDateTime updateDateTime;
+	private LocalDateTime updateDateTime;
 	
 	
 	
 	public User(){
 		
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	

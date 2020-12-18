@@ -23,29 +23,29 @@ import org.hibernate.annotations.UpdateTimestamp;
 public  class Bill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	Long id;
+	private Long id;
 	@Column(nullable = false , unique = true)
-	int billNumber;
+	private int billNumber;
 	@Column(nullable = false)
-	Long total;
+	private Long total;
 	@Column(nullable = false)
-	Long paid;
+	private Long paid;
 	@Column(nullable = false)
-	Long remainder;
+	private Long remainder;
 	@CreationTimestamp
-	LocalDateTime creatDateTime;
+	private LocalDateTime creatDateTime;
 	@UpdateTimestamp
-	LocalDateTime updateDateTime;
+	private LocalDateTime updateDateTime;
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	BillType billType;
+	private BillType billType;
 	@Column(nullable = false)
-	boolean deleted;
+	private boolean deleted;
 	@ManyToOne(optional = false)
-	BillSecondParty secondParty;
+	private BillSecondParty secondParty;
 	@ElementCollection
-	@CollectionTable(name = "Bill_Item")
-	Collection<BillItem> items;
+	@CollectionTable(name = "pos_bill_item")
+	private Collection<BillItem> items;
 	
 	
 

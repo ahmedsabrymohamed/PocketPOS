@@ -2,26 +2,21 @@ package com.pocket.pos.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Embeddable
 public class BillItem {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	Long id;
+	
 	@Column(nullable = false)
-	double price;
+	private Double price;
 	@Column(nullable = false)
-	double quantity;
+	private Double quantity;
 
 	@OneToOne
 	@JoinColumn(unique = true)
-	Bulk bulk;
+	private Bulk bulk;
 
 	
 	public BillItem() {
@@ -44,9 +39,7 @@ public class BillItem {
 		this.price = buyPrice;
 	}
 
-	public Long getId() {
-		return id;
-	}
+	
 
 	
 

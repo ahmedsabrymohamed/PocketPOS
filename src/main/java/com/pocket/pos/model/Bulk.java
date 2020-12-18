@@ -11,35 +11,37 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Check;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "pos_bulk")
+@Check(constraints = "quantity >= 0")
 public class Bulk {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	Long id;
+	private Long id;
 	@Column(nullable = false)
-	double buyPrice;
+	private Double buyPrice;
 	@Column(nullable = false)
-	double quantity;
+	private Long quantity;
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
-	Product product;
+	private Product product;
 	@CreationTimestamp
-	LocalDateTime creatDateTime;
+	private LocalDateTime creatDateTime;
 	@UpdateTimestamp
-	LocalDateTime updateDateTime;
+	private LocalDateTime updateDateTime;
 	
 	
 	
 	public Bulk() {
 		
 	}
-	public double getQuantity() {
+	public Long getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(double quantity) {
+	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 	public double getBuyPrice() {
