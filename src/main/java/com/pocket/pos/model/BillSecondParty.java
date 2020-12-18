@@ -27,7 +27,7 @@ public class BillSecondParty {
 	@UpdateTimestamp
 	private LocalDateTime updateDateTime;
 	@Column(nullable = false)
-	private boolean deleted;
+	private boolean deleted = false;
 	
 	
 	

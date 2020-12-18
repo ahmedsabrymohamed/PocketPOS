@@ -38,7 +38,7 @@ public  class Bill {
 	@Enumerated(EnumType.STRING)
 	private BillType billType;
 	@Column(nullable = false)
-	private boolean deleted;
+	private boolean deleted = false;
 	@ManyToOne(optional = false)
 	private BillSecondParty secondParty;
 	@ElementCollection

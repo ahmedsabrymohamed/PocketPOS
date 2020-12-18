@@ -32,6 +32,8 @@ public class Bulk {
 	private LocalDateTime creatDateTime;
 	@UpdateTimestamp
 	private LocalDateTime updateDateTime;
+	@Column(nullable = false)
+	private boolean deleted = false;
 	
 	
 	
@@ -107,6 +109,15 @@ public class Bulk {
 			return false;
 		}
 		return true;
+	}
+	public boolean isDeleted() {
+		return deleted;
+	}
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+	public void setBuyPrice(Double buyPrice) {
+		this.buyPrice = buyPrice;
 	}
 	
 	
