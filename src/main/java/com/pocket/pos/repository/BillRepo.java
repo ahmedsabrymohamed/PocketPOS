@@ -21,5 +21,5 @@ public interface BillRepo extends PagingAndSortingRepository<Bill, Long> {
 	@RestResource(path = "findByBillType", rel = "findByBillType")
 	public Page<Bill> findByDeletedAndBillType(@Param("deleted")boolean deleted,@Param("billType")BillType billType, Pageable pageable);
 	@RestResource(path = "findBySecondPartyIdandBillType", rel = "findBySecondPartyIdandBillType")
-	public Page<Bill> findByDeletedAndSecondParty_Id(@Param("deleted")boolean deleted,@Param("SecondPartyId")Long id,@Param("billType")BillType billType, Pageable pageable);
+	public Page<Bill> findByDeletedAndSecondParty_IdAndBillType(@Param("deleted")boolean deleted,@Param("SecondPartyId")Long id,@Param("billType")BillType billType, Pageable pageable);
 }
