@@ -34,7 +34,7 @@ public class User {
 	@Column(nullable = false)
 	private boolean deleted = false;
 	@CreationTimestamp
-	private LocalDateTime creatDateTime;
+	private LocalDateTime createDateTime;
 	@UpdateTimestamp
 	private LocalDateTime updateDateTime;
 	
@@ -82,6 +82,19 @@ public class User {
 	}
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+	
+	public LocalDateTime getCreateDateTime() {
+		return createDateTime;
+	}
+	public void setCreateDateTime(LocalDateTime createDateTime) {
+		this.createDateTime = createDateTime;
+	}
+	public LocalDateTime getUpdateDateTime() {
+		return updateDateTime;
+	}
+	public void setUpdateDateTime(LocalDateTime updateDateTime) {
+		this.updateDateTime = updateDateTime;
 	}
 	@Override
 	public int hashCode() {

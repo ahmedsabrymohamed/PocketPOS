@@ -24,7 +24,7 @@ public class Product {
 	private String name;
 	private LocalDate expirationDate;
 	@CreationTimestamp
-	private LocalDateTime creatDateTime;
+	private LocalDateTime createDateTime;
 	@UpdateTimestamp
 	private LocalDateTime updateDateTime;
 	@Column(nullable = false)
@@ -47,11 +47,11 @@ public class Product {
 	public void setExpirationDate(LocalDate expirationDate) {
 		this.expirationDate = expirationDate;
 	}
-	public LocalDateTime getCreatDateTime() {
-		return creatDateTime;
+	public LocalDateTime getCreateDateTime() {
+		return createDateTime;
 	}
-	public void setCreatDateTime(LocalDateTime creatDateTime) {
-		this.creatDateTime = creatDateTime;
+	public void setCreatDateTime(LocalDateTime createDateTime) {
+		this.createDateTime = createDateTime;
 	}
 	public LocalDateTime getUpdateDateTime() {
 		return updateDateTime;
@@ -72,7 +72,7 @@ public class Product {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((creatDateTime == null) ? 0 : creatDateTime.hashCode());
+		result = prime * result + ((createDateTime == null) ? 0 : createDateTime.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -85,11 +85,11 @@ public class Product {
 			return false;
 		}
 		Product other = (Product) obj;
-		if (creatDateTime == null) {
-			if (other.getCreatDateTime() != null) {
+		if (createDateTime == null) {
+			if (other.getCreateDateTime() != null) {
 				return false;
 			}
-		} else if (!creatDateTime.equals(other.getCreatDateTime())) {
+		} else if (!createDateTime.equals(other.getCreateDateTime())) {
 			return false;
 		}
 		if (name == null) {

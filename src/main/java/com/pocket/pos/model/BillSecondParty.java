@@ -23,7 +23,7 @@ public class BillSecondParty {
 	@Column(nullable = false,unique = true)
 	private String phone;
 	@CreationTimestamp
-	private LocalDateTime creatDateTime;
+	private LocalDateTime createDateTime;
 	@UpdateTimestamp
 	private LocalDateTime updateDateTime;
 	@Column(nullable = false)
@@ -46,11 +46,11 @@ public class BillSecondParty {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public LocalDateTime getCreatDateTime() {
-		return creatDateTime;
+	public LocalDateTime getCreateDateTime() {
+		return createDateTime;
 	}
-	public void setCreatDateTime(LocalDateTime creatDateTime) {
-		this.creatDateTime = creatDateTime;
+	public void setCreateDateTime(LocalDateTime createDateTime) {
+		this.createDateTime = createDateTime;
 	}
 	public LocalDateTime getUpdateDateTime() {
 		return updateDateTime;

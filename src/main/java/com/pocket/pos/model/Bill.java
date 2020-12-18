@@ -31,7 +31,7 @@ public  class Bill {
 	@Column(nullable = false)
 	private Long remainder;
 	@CreationTimestamp
-	private LocalDateTime creatDateTime;
+	private LocalDateTime createDateTime;
 	@UpdateTimestamp
 	private LocalDateTime updateDateTime;
 	@Column(nullable = false)
@@ -53,12 +53,12 @@ public  class Bill {
 
 	
 
-	public LocalDateTime getCreatDateTime() {
-		return creatDateTime;
+	public LocalDateTime getCreateDateTime() {
+		return createDateTime;
 	}
 
-	public void setCreatDateTime(LocalDateTime creatDateTime) {
-		this.creatDateTime = creatDateTime;
+	public void setCreateDateTime(LocalDateTime createDateTime) {
+		this.createDateTime = createDateTime;
 	}
 
 	public LocalDateTime getUpdateDateTime() {
@@ -136,7 +136,7 @@ public  class Bill {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((creatDateTime == null) ? 0 : creatDateTime.hashCode());
+		result = prime * result + ((createDateTime == null) ? 0 : createDateTime.hashCode());
 		return result;
 	}
 
@@ -151,11 +151,11 @@ public  class Bill {
 			return false;
 		}
 		Bill other = (Bill) obj;
-		if (creatDateTime == null) {
-			if (other.getCreatDateTime() != null) {
+		if (createDateTime == null) {
+			if (other.getCreateDateTime() != null) {
 				return false;
 			}
-		} else if (!creatDateTime.equals(other.getCreatDateTime())) {
+		} else if (!createDateTime.equals(other.getCreateDateTime())) {
 			return false;
 		}
 		return true;

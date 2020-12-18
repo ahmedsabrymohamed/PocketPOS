@@ -29,7 +29,7 @@ public class Bulk {
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	private Product product;
 	@CreationTimestamp
-	private LocalDateTime creatDateTime;
+	private LocalDateTime createDateTime;
 	@UpdateTimestamp
 	private LocalDateTime updateDateTime;
 	@Column(nullable = false)
@@ -62,11 +62,11 @@ public class Bulk {
 		return id;
 	}
 	
-	public LocalDateTime getCreatDateTime() {
-		return creatDateTime;
+	public LocalDateTime getCreateDateTime() {
+		return createDateTime;
 	}
-	public void setCreatDateTime(LocalDateTime creatDateTime) {
-		this.creatDateTime = creatDateTime;
+	public void setCreateDateTime(LocalDateTime createDateTime) {
+		this.createDateTime = createDateTime;
 	}
 	public LocalDateTime getUpdateDateTime() {
 		return updateDateTime;
@@ -81,7 +81,7 @@ public class Bulk {
 		long temp;
 		temp = Double.doubleToLongBits(buyPrice);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((creatDateTime == null) ? 0 : creatDateTime.hashCode());
+		result = prime * result + ((createDateTime == null) ? 0 : createDateTime.hashCode());
 		temp = Double.doubleToLongBits(quantity);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
@@ -98,11 +98,11 @@ public class Bulk {
 		if (Double.doubleToLongBits(buyPrice) != Double.doubleToLongBits(other.getBuyPrice())) {
 			return false;
 		}
-		if (creatDateTime == null) {
-			if (other.getCreatDateTime() != null) {
+		if (createDateTime == null) {
+			if (other.getCreateDateTime() != null) {
 				return false;
 			}
-		} else if (!creatDateTime.equals(other.getCreatDateTime())) {
+		} else if (!createDateTime.equals(other.getCreateDateTime())) {
 			return false;
 		}
 		if (Double.doubleToLongBits(quantity) != Double.doubleToLongBits(other.getQuantity())) {
