@@ -24,8 +24,6 @@ public  class Bill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	@Column(nullable = false , unique = true)
-	private int billNumber;
 	@Column(nullable = false)
 	private Long total;
 	@Column(nullable = false)
@@ -53,13 +51,7 @@ public  class Bill {
 		
 	}
 
-	public int getBillNumber() {
-		return billNumber;
-	}
-
-	public void setBillNumber(int billNumber) {
-		this.billNumber = billNumber;
-	}
+	
 
 	public LocalDateTime getCreatDateTime() {
 		return creatDateTime;
@@ -138,13 +130,17 @@ public  class Bill {
 		this.secondParty = secondParty;
 	}
 
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + billNumber;
+		result = prime * result + ((creatDateTime == null) ? 0 : creatDateTime.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -155,11 +151,17 @@ public  class Bill {
 			return false;
 		}
 		Bill other = (Bill) obj;
-		if (billNumber != other.billNumber) {
+		if (creatDateTime == null) {
+			if (other.getCreatDateTime() != null) {
+				return false;
+			}
+		} else if (!creatDateTime.equals(other.getCreatDateTime())) {
 			return false;
 		}
 		return true;
 	}
+
+	
 
 	
 	
