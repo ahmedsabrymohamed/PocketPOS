@@ -14,12 +14,15 @@ import com.pocket.pos.model.BillType;
 @CrossOrigin
 @RepositoryRestResource(collectionResourceRel = "bill", path = "bill")
 public interface BillRepo extends PagingAndSortingRepository<Bill, Long> {
-	@RestResource(path = "findifexists", rel = "findifexists")
+	@RestResource(path = "findIfExists", rel = "findIfExists")
 	public Page<Bill> findByDeleted(@Param("deleted")boolean deleted, Pageable pageable);
+	
 	@RestResource(path = "findBySecondPartyId", rel = "findBySecondPartyId")
 	public Page<Bill> findByDeletedAndSecondParty_Id(@Param("deleted")boolean deleted,@Param("SecondPartyId")Long id, Pageable pageable);
+	
 	@RestResource(path = "findByBillType", rel = "findByBillType")
 	public Page<Bill> findByDeletedAndBillType(@Param("deleted")boolean deleted,@Param("billType")BillType billType, Pageable pageable);
-	@RestResource(path = "findBySecondPartyIdandBillType", rel = "findBySecondPartyIdandBillType")
+	
+	@RestResource(path = "findBySecondPartyIdAndBillType", rel = "findBySecondPartyIdAndBillType")
 	public Page<Bill> findByDeletedAndSecondParty_IdAndBillType(@Param("deleted")boolean deleted,@Param("SecondPartyId")Long id,@Param("billType")BillType billType, Pageable pageable);
 }

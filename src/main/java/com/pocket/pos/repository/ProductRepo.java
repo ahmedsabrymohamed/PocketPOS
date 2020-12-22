@@ -13,6 +13,6 @@ import com.pocket.pos.model.Product;
 @CrossOrigin
 @RepositoryRestResource(collectionResourceRel = "product", path = "product")
 public interface ProductRepo extends PagingAndSortingRepository<Product, Long> {
-	@RestResource(path = "findifexists", rel = "findifexists")
+	@RestResource(path = "findIfExists", rel = "findIfExists")
 	public Page<Product> findByDeleted(@Param("deleted")boolean deleted, Pageable pageable);
 }

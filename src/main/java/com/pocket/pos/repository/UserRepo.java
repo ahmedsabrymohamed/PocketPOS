@@ -13,9 +13,9 @@ import com.pocket.pos.model.User;
 @CrossOrigin
 @RepositoryRestResource(collectionResourceRel = "user", path = "user")
 public interface UserRepo extends PagingAndSortingRepository<User, Long>{
-	@RestResource(path = "findifexists", rel = "findifexists")
+	@RestResource(path = "findIfExists", rel = "findIfExists")
 	public Page<User> findByDeleted(@Param("deleted")boolean deleted, Pageable pageable);
-	@RestResource(path = "findifexists", rel = "findifexists")
+	@RestResource(path = "findByUserNameAndPassword", rel = "findByUserNameAndPassword")
 	public Page<User> findByDeletedAndUserNameAndPassword(@Param("deleted")boolean deleted, @Param("userName") String userName,@Param("password") String password,Pageable pageable);
 	
 }

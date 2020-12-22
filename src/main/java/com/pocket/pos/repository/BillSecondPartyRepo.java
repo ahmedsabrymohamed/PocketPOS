@@ -13,6 +13,6 @@ import com.pocket.pos.model.BillSecondParty;
 @CrossOrigin
 @RepositoryRestResource(collectionResourceRel = "billSecondParty", path = "billSecondParty")
 public interface BillSecondPartyRepo extends PagingAndSortingRepository<BillSecondParty, Long>{
-	@RestResource(path = "findifexists", rel = "findifexists")
+	@RestResource(path = "findIfExists", rel = "findIfExists")
 	public Page<BillSecondParty> findByDeleted(@Param("deleted")boolean deleted, Pageable pageable);
 }

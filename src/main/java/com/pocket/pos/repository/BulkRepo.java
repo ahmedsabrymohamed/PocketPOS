@@ -15,6 +15,6 @@ import com.pocket.pos.model.Bulk;
 public interface BulkRepo extends PagingAndSortingRepository<Bulk, Long>{
 	@RestResource(path = "findByProductId", rel = "findByProductId")
 	public Page<Bulk> findByDeletedAndProduct_Id(@Param("deleted")boolean deleted,@Param("productId")Long id, Pageable pageable);
-	@RestResource(path = "findifexists", rel = "findifexists")
+	@RestResource(path = "findIfExists", rel = "findIfExists")
 	public Page<Bulk> findByDeleted(@Param("deleted")boolean deleted, Pageable pageable);
 }
