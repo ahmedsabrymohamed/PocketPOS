@@ -1,40 +1,30 @@
 package com.pocket.pos.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "pos_product")
-public class Product {
+public class Product extends ModelCommons {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long id;
 	@Column(nullable = false,unique = true)
 	private String name;
 	private LocalDate expirationDate;
-	@CreationTimestamp
-	private LocalDateTime createDateTime;
-	@UpdateTimestamp
-	private LocalDateTime updateDateTime;
-	@Column(nullable = false)
-	private boolean deleted = false;
-	
-	
 	
 	public Product() {
 		
 	}
+	
+	public Product(String name, LocalDate expirationDate) {
+		super();
+		this.name = name;
+		this.expirationDate = expirationDate;
+		
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -47,27 +37,7 @@ public class Product {
 	public void setExpirationDate(LocalDate expirationDate) {
 		this.expirationDate = expirationDate;
 	}
-	public LocalDateTime getCreateDateTime() {
-		return createDateTime;
-	}
-	public void setCreatDateTime(LocalDateTime createDateTime) {
-		this.createDateTime = createDateTime;
-	}
-	public LocalDateTime getUpdateDateTime() {
-		return updateDateTime;
-	}
-	public void setUpdateDateTime(LocalDateTime updateDateTime) {
-		this.updateDateTime = updateDateTime;
-	}
-	public Long getId() {
-		return id;
-	}
-	public boolean isDeleted() {
-		return deleted;
-	}
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -76,6 +46,7 @@ public class Product {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

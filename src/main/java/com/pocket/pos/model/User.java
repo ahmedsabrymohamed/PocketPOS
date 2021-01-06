@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,6 +21,8 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	@Version
+	private Long version;
 	@Column(nullable = false)
 	private String name;
 	@Column(nullable = false,unique = true)
@@ -43,6 +46,23 @@ public class User {
 	public User(){
 		
 	}
+	
+	
+	public User(String name, String phone, String password, String userName, Role role) {
+		super();
+		this.name = name;
+		this.phone = phone;
+		this.password = password;
+		this.userName = userName;
+		this.role = role;
+		
+	}
+
+
+	public Long getVersion() {
+		return version;
+	}
+
 	public Long getId() {
 		return id;
 	}

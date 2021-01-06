@@ -1,79 +1,69 @@
 package com.pocket.pos.model;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Check;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "pos_bulk")
-@Check(constraints = "quantity >= 0")
-public class Bulk {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long id;
-	@Column(nullable = false)
+@Table(name = "pos_bulk",uniqueConstraints = {@UniqueConstraint(columnNames = {"buy_price","product_id"})})
+
+public class Bulk extends ModelCommons {
+
+	@Column(nullable = false,name = "buy_price")
 	private Double buyPrice;
-	@Column(nullable = false)
-	private Long quantity;
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
+	@Column(nullable = false,name = "quantity")
+	private Double quantity;
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id")
 	private Product product;
-	@CreationTimestamp
-	private LocalDateTime createDateTime;
-	@UpdateTimestamp
-	private LocalDateTime updateDateTime;
-	@Column(nullable = false)
-	private boolean deleted = false;
-	
-	
-	
+
 	public Bulk() {
-		
+
 	}
-	public Long getQuantity() {
+
+	public Bulk(Double buyPrice, Double quantity, Product product) {
+		super();
+		this.buyPrice = buyPrice;
+		this.quantity = quantity;
+		this.product = product;
+	}
+
+	public Double getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(Long quantity) {
+
+	public void setQuantity(Double quantity) {
 		this.quantity = quantity;
 	}
+	
+	public void addQuantity(Double quantity) {
+		this.quantity += quantity;
+	}
+	
+	public void subtractQuantity(Double quantity) {
+		this.quantity -= quantity;
+	}
+
 	public double getBuyPrice() {
 		return buyPrice;
 	}
-	public void setBuyPrice(double buyPrice) {
+
+	public void setBuyPrice(Double buyPrice) {
 		this.buyPrice = buyPrice;
 	}
+
 	public Product getProduct() {
 		return product;
 	}
+
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	public Long getId() {
-		return id;
-	}
-	
-	public LocalDateTime getCreateDateTime() {
-		return createDateTime;
-	}
-	public void setCreateDateTime(LocalDateTime createDateTime) {
-		this.createDateTime = createDateTime;
-	}
-	public LocalDateTime getUpdateDateTime() {
-		return updateDateTime;
-	}
-	public void setUpdateDateTime(LocalDateTime updateDateTime) {
-		this.updateDateTime = updateDateTime;
-	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -86,6 +76,7 @@ public class Bulk {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -110,17 +101,5 @@ public class Bulk {
 		}
 		return true;
 	}
-	public boolean isDeleted() {
-		return deleted;
-	}
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-	public void setBuyPrice(Double buyPrice) {
-		this.buyPrice = buyPrice;
-	}
-	
-	
-	
-	
+
 }
