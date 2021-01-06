@@ -1,28 +1,30 @@
 package com.pocket.pos.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.pocket.pos.model.Bill;
 import com.pocket.pos.model.BillType;
+import com.pocket.pos.projections.BillSecondPartyOnlyProjection;
+import com.pocket.pos.projections.BillWithoutRelationsProjection;
 
-@CrossOrigin
-@RepositoryRestResource(collectionResourceRel = "bill", path = "bill")
+
 public interface BillRepo extends PagingAndSortingRepository<Bill, Long> {
-	@RestResource(path = "findIfExists", rel = "findIfExists")
-	public Page<Bill> findByDeleted(@Param("deleted")boolean deleted, Pageable pageable);
 	
-	@RestResource(path = "findBySecondPartyId", rel = "findBySecondPartyId")
-	public Page<Bill> findByDeletedAndSecondParty_Id(@Param("deleted")boolean deleted,@Param("SecondPartyId")Long id, Pageable pageable);
+	public Page<BillWithoutRelationsProjection> findByDeleted(boolean deleted, Pageable pageable);
 	
-	@RestResource(path = "findByBillType", rel = "findByBillType")
-	public Page<Bill> findByDeletedAndBillType(@Param("deleted")boolean deleted,@Param("billType")BillType billType, Pageable pageable);
+	public Optional<BillWithoutRelationsProjection> findBillById(Long id);
 	
-	@RestResource(path = "findBySecondPartyIdAndBillType", rel = "findBySecondPartyIdAndBillType")
-	public Page<Bill> findByDeletedAndSecondParty_IdAndBillType(@Param("deleted")boolean deleted,@Param("SecondPartyId")Long id,@Param("billType")BillType billType, Pageable pageable);
+	public Optional<BillSecondPartyOnlyProjection> findBill_SecondPartyById(Long id);
+	
+	public Page<Bill> findByDeletedAndSecondParty_Id(boolean deleted,Long id, Pageable pageable);
+	
+	
+	public Page<Bill> findByDeletedAndBillType(boolean deleted,BillType billType, Pageable pageable);
+	
+	
+	public Page<Bill> findByDeletedAndSecondParty_IdAndBillType(boolean deleted,Long id,BillType billType, Pageable pageable);
 }
