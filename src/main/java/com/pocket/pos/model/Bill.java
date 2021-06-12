@@ -1,6 +1,6 @@
 package com.pocket.pos.model;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CollectionTable;
@@ -9,97 +9,79 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public  class Bill {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	long id;
+@Table(name="pos_bill")
+public  class Bill extends ModelCommons {
+	
 	@Column(nullable = false)
-	int billNumber;
+	private Double total;
 	@Column(nullable = false)
-	Long total;
+	private Double paid;
 	@Column(nullable = false)
-	Long paid;
-	@Column(nullable = false)
-	Long remainder;
-	@CreationTimestamp
-	LocalDateTime creatDateTime;
-	@UpdateTimestamp
-	LocalDateTime updateDateTime;
+	private Double remainder;
+	
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	BillType billType;
-	@Column(nullable = false)
-	boolean deleted;
-	@ManyToOne(optional = false)
-	BillSecondParty secondParty;
-	@ElementCollection
-	@CollectionTable(name = "Bill_Item")
-	Collection<BillItem> items;
+	private BillType billType;
+	
+	@ManyToOne(optional = false,fetch = FetchType.LAZY)
+	private BillSecondParty secondParty;
+	@ElementCollection(fetch = FetchType.LAZY )
+	@CollectionTable(name = "pos_bill_item",uniqueConstraints = {@UniqueConstraint(columnNames = {"bill_id", "bulk_id"})})
+	private Collection<BillItem> items = new ArrayList<>();
 	
 	
 
 	public Bill() {
 		
 	}
+	
+	
 
-	public int getBillNumber() {
-		return billNumber;
+	public Bill(Double paid,BillType billType, BillSecondParty secondParty) {
+		super();
+		
+		this.paid = paid;
+		this.billType = billType;
+		this.secondParty = secondParty;
+		
 	}
 
-	public void setBillNumber(int billNumber) {
-		this.billNumber = billNumber;
-	}
 
-	public LocalDateTime getCreatDateTime() {
-		return creatDateTime;
-	}
 
-	public void setCreatDateTime(LocalDateTime creatDateTime) {
-		this.creatDateTime = creatDateTime;
-	}
+	
+	
 
-	public LocalDateTime getUpdateDateTime() {
-		return updateDateTime;
-	}
 
-	public void setUpdateDateTime(LocalDateTime updateDateTime) {
-		this.updateDateTime = updateDateTime;
-	}
 
-	public long getId() {
-		return id;
-	}
+	
 
-	public Long getTotal() {
+	public Double getTotal() {
 		return total;
 	}
 
-	public void setTotal(Long total) {
+	public void setTotal(Double total) {
 		this.total = total;
 	}
 
-	public Long getPaid() {
+	public Double getPaid() {
 		return paid;
 	}
 
-	public void setPaid(Long paid) {
+	public void setPaid(Double paid) {
 		this.paid = paid;
 	}
 
-	public Long getRemainder() {
+	public Double getRemainder() {
 		return remainder;
 	}
 
-	public void setRemainder(Long remainder) {
+	public void setRemainder(Double remainder) {
 		this.remainder = remainder;
 	}
 
@@ -120,14 +102,6 @@ public  class Bill {
 		this.items = items;
 	}
 
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
 	public BillSecondParty getSecondParty() {
 		return secondParty;
 	}
@@ -135,6 +109,53 @@ public  class Bill {
 	public void setSecondParty(BillSecondParty secondParty) {
 		this.secondParty = secondParty;
 	}
+
+	
+	private void calculateTotal() {
+		total = items.stream().reduce(0.0,(total,item)->total+= (item.getPrice()*item.getQuantity()),(a,b)->a+b);
+	}
+	
+	private void calculateRemainder() {
+		remainder = total - paid ; 
+	}
+
+	public void calculateBill() {
+		calculateTotal();
+		calculateRemainder();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((createDateTime == null) ? 0 : createDateTime.hashCode());
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Bill)) {
+			return false;
+		}
+		Bill other = (Bill) obj;
+		if (createDateTime == null) {
+			if (other.getCreateDateTime() != null) {
+				return false;
+			}
+		} else if (!createDateTime.equals(other.getCreateDateTime())) {
+			return false;
+		}
+		return true;
+	}
+
+	
+
+	
 	
 	
 }

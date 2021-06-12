@@ -1,40 +1,30 @@
 package com.pocket.pos.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "pos_product")
-public class Product {
+public class Product extends ModelCommons {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	Long id;
-	@Column(nullable = false)
-	String name;
-	LocalDate expirationDate;
-	@CreationTimestamp
-	LocalDateTime creatDateTime;
-	@UpdateTimestamp
-	LocalDateTime updateDateTime;
-	@Column(nullable = false)
-	boolean deleted;
-	
-	
+	@Column(nullable = false,unique = true)
+	private String name;
+	private LocalDate expirationDate;
 	
 	public Product() {
 		
 	}
+	
+	public Product(String name, LocalDate expirationDate) {
+		super();
+		this.name = name;
+		this.expirationDate = expirationDate;
+		
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -47,27 +37,42 @@ public class Product {
 	public void setExpirationDate(LocalDate expirationDate) {
 		this.expirationDate = expirationDate;
 	}
-	public LocalDateTime getCreatDateTime() {
-		return creatDateTime;
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((createDateTime == null) ? 0 : createDateTime.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
 	}
-	public void setCreatDateTime(LocalDateTime creatDateTime) {
-		this.creatDateTime = creatDateTime;
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Product)) {
+			return false;
+		}
+		Product other = (Product) obj;
+		if (createDateTime == null) {
+			if (other.getCreateDateTime() != null) {
+				return false;
+			}
+		} else if (!createDateTime.equals(other.getCreateDateTime())) {
+			return false;
+		}
+		if (name == null) {
+			if (other.getName() != null) {
+				return false;
+			}
+		} else if (!name.equals(other.getName())) {
+			return false;
+		}
+		return true;
 	}
-	public LocalDateTime getUpdateDateTime() {
-		return updateDateTime;
-	}
-	public void setUpdateDateTime(LocalDateTime updateDateTime) {
-		this.updateDateTime = updateDateTime;
-	}
-	public Long getId() {
-		return id;
-	}
-	public boolean isDeleted() {
-		return deleted;
-	}
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
+	
 	
 	
 	

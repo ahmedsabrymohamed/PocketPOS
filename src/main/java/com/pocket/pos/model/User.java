@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,31 +20,50 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	long id;
+	private Long id;
+	@Version
+	private Long version;
 	@Column(nullable = false)
-	String name;
+	private String name;
+	@Column(nullable = false,unique = true)
+	private String phone;
 	@Column(nullable = false)
-	String phone;
-	@Column(nullable = false)
-	String password;
-	@Column(nullable = false)
-	String userName;
+	private String password;
+	@Column(nullable = false, unique = true)
+	private String userName;
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	Role role;
+	private Role role;
 	@Column(nullable = false)
-	boolean deleted;
+	private boolean deleted = false;
 	@CreationTimestamp
-	LocalDateTime creatDateTime;
+	private LocalDateTime createDateTime;
 	@UpdateTimestamp
-	LocalDateTime updateDateTime;
+	private LocalDateTime updateDateTime;
 	
 	
 	
 	public User(){
 		
 	}
-	public long getId() {
+	
+	
+	public User(String name, String phone, String password, String userName, Role role) {
+		super();
+		this.name = name;
+		this.phone = phone;
+		this.password = password;
+		this.userName = userName;
+		this.role = role;
+		
+	}
+
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public Long getId() {
 		return id;
 	}
 	
@@ -83,6 +103,53 @@ public class User {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+	
+	public LocalDateTime getCreateDateTime() {
+		return createDateTime;
+	}
+	public void setCreateDateTime(LocalDateTime createDateTime) {
+		this.createDateTime = createDateTime;
+	}
+	public LocalDateTime getUpdateDateTime() {
+		return updateDateTime;
+	}
+	public void setUpdateDateTime(LocalDateTime updateDateTime) {
+		this.updateDateTime = updateDateTime;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof User)) {
+			return false;
+		}
+		User other = (User) obj;
+		if (phone == null) {
+			if (other.getPhone() != null) {
+				return false;
+			}
+		} else if (!phone.equals(other.getPhone())) {
+			return false;
+		}
+		if (userName == null) {
+			if (other.getUserName() != null) {
+				return false;
+			}
+		} else if (!userName.equals(other.getUserName())) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 	
 }

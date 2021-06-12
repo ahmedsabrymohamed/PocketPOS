@@ -1,69 +1,69 @@
 package com.pocket.pos.model;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import javax.persistence.Table;
 
 @Entity
-public class BillSecondParty {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	long id;
-	@Column(nullable = false)
-	String name;
-	@Column(nullable = false)
-	String phone;
-	@CreationTimestamp
-	LocalDateTime creatDateTime;
-	@UpdateTimestamp
-	LocalDateTime updateDateTime;
-	@Column(nullable = false)
-	boolean deleted;
+@Table(name = "pos_bill_second_party")
+public class BillSecondParty extends ModelCommons{
 	
-	
-	
+	@Column(nullable = false)
+	private String name;
+	@Column(nullable = false, unique = true)
+	private String phone;
+
 	public BillSecondParty() {
-		
+
 	}
+
+	public BillSecondParty(String name, String phone) {
+		super();
+		this.name = name;
+		this.phone = phone;
+	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public LocalDateTime getCreatDateTime() {
-		return creatDateTime;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		return result;
 	}
-	public void setCreatDateTime(LocalDateTime creatDateTime) {
-		this.creatDateTime = creatDateTime;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof BillSecondParty)) {
+			return false;
+		}
+		BillSecondParty other = (BillSecondParty) obj;
+		if (phone == null) {
+			if (other.getPhone() != null) {
+				return false;
+			}
+		} else if (!phone.equals(other.getPhone())) {
+			return false;
+		}
+		return true;
 	}
-	public LocalDateTime getUpdateDateTime() {
-		return updateDateTime;
-	}
-	public void setUpdateDateTime(LocalDateTime updateDateTime) {
-		this.updateDateTime = updateDateTime;
-	}
-	public long getId() {
-		return id;
-	}
-	public boolean isDeleted() {
-		return deleted;
-	}
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-	
+
 }
