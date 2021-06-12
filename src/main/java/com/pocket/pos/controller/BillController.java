@@ -9,22 +9,26 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pocket.pos.exception.ApiSimpleResponse;
 import com.pocket.pos.model.assembler.BillSecondPartyOnlyAssembler;
 import com.pocket.pos.model.assembler.BillWithoutRelationsAssembler;
 import com.pocket.pos.projections.BillSecondPartyOnlyProjection;
 import com.pocket.pos.projections.BillWithoutRelationsProjection;
 import com.pocket.pos.requestModel.BillRequestModel;
 import com.pocket.pos.service.BillService;
+import com.pocket.pos.util.ResponseEntityBuilder;
 
 @CrossOrigin
 @RestController
@@ -51,9 +55,9 @@ public class BillController {
 			@RequestParam("page") Optional<Integer> page) {
 
 		Page<BillWithoutRelationsProjection> bills = billService.getNotDeletedBills(page.orElse(0));
-		
-		return pagedResourcesAssembler.toModel(bills,noRelationsAssembler);
-		
+
+		return pagedResourcesAssembler.toModel(bills, noRelationsAssembler);
+
 	}
 
 	@GetMapping("/{id}")
@@ -77,10 +81,22 @@ public class BillController {
 
 	@PostMapping
 	public ResponseEntity<?> addBill(@RequestBody BillRequestModel bill) {
-		Long id = billService.addBill(bill);
+		Long id = billService.addBill(bill).getId();
 		return ResponseEntity //
 				.created(linkTo(methodOn(BillController.class).getBillById(id)).withSelfRel().toUri())
-				.body("Created");
+				.body(ResponseEntityBuilder
+						.build(new ApiSimpleResponse(HttpStatus.CREATED, "the Bill Created Successfully")));
+
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateBill(@PathVariable("id") Long id, @RequestBody BillRequestModel bill) {
+		bill.id = id;
+		billService.updateBill(bill);
+		return ResponseEntity //
+				.created(linkTo(methodOn(BillController.class).getBillById(id)).withSelfRel().toUri())
+				.body(ResponseEntityBuilder
+						.build(new ApiSimpleResponse(HttpStatus.ACCEPTED, "the Bill Updated Successfully")));
 
 	}
 
