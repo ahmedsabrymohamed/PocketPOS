@@ -13,7 +13,7 @@ public class MissingParametersException extends RuntimeException{
 	@Override
 	public String getMessage() {
 		
-		return resourceClass.getSimpleName()+"Missing required fields";
+		return resourceClass.getSimpleName()+" Missing required fields";
 	}
 	
 	
