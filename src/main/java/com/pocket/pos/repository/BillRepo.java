@@ -20,6 +20,8 @@ public interface BillRepo extends PagingAndSortingRepository<Bill, Long> {
 	
 	public Optional<BillSecondPartyOnlyProjection> findBill_SecondPartyById(Long id);
 	
+	public void deleteBill_itemsById(Long id);
+	
 	public Page<Bill> findByDeletedAndSecondParty_Id(boolean deleted,Long id, Pageable pageable);
 	
 	
