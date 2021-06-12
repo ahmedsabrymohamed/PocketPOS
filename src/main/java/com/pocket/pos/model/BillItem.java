@@ -49,6 +49,18 @@ public class BillItem {
 		this.price = buyPrice;
 	}
 
+
+	public Bulk getBulk() {
+		return bulk;
+	}
+
+
+	public void setBulk(Bulk bulk) {
+		this.bulk = bulk;
+	}
+	
+	
+
 	
 
 	
