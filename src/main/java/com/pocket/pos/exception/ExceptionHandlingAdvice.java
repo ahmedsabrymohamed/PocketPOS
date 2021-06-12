@@ -31,8 +31,7 @@ public class ExceptionHandlingAdvice extends ResponseEntityExceptionHandler{
         details.add(ex.getSQLException().getMessage());
         
         
-        ApiError err = new ApiError(
-            LocalDateTime.now(),
+        ApiSimpleResponse err = new ApiSimpleResponse(
             HttpStatus.BAD_REQUEST, 
             "Data integrity violation" ,
             details);
@@ -50,8 +49,7 @@ public class ExceptionHandlingAdvice extends ResponseEntityExceptionHandler{
        
         
         
-        ApiError err = new ApiError(
-            LocalDateTime.now(),
+        ApiSimpleResponse err = new ApiSimpleResponse(
             HttpStatus.BAD_REQUEST, 
             "Missing Paramters" ,
             details);
@@ -68,8 +66,7 @@ public class ExceptionHandlingAdvice extends ResponseEntityExceptionHandler{
 		List<String> details = new ArrayList<String>();
         details.add(ex.getMessage());
         
-        ApiError err = new ApiError(
-            LocalDateTime.now(),
+        ApiSimpleResponse err = new ApiSimpleResponse(
             HttpStatus.NOT_FOUND, 
             "Resource Not Found" ,
             details);
@@ -86,8 +83,7 @@ public class ExceptionHandlingAdvice extends ResponseEntityExceptionHandler{
 		List<String> details = new ArrayList<String>();
         details.add(ex.getMessage());
         
-        ApiError err = new ApiError(
-            LocalDateTime.now(),
+        ApiSimpleResponse err = new ApiSimpleResponse(
             HttpStatus.NOT_FOUND, 
             "Resource Not Found" ,
             details);
@@ -104,8 +100,7 @@ public class ExceptionHandlingAdvice extends ResponseEntityExceptionHandler{
 		List<String> details = new ArrayList<String>();
         details.add(ex.getMessage());
         
-        ApiError err = new ApiError(
-            LocalDateTime.now(),
+        ApiSimpleResponse err = new ApiSimpleResponse(
             HttpStatus.CONFLICT, 
             "Resource State Changed" ,
             details);
