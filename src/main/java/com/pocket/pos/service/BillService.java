@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pocket.pos.exception.ResourceNotFoundException;
-import com.pocket.pos.exception.ResourceStateCahngedException;
 import com.pocket.pos.model.Bill;
 import com.pocket.pos.model.BillItem;
 import com.pocket.pos.model.BillType;
@@ -48,27 +47,37 @@ public class BillService {
 	}
 
 	@Transactional
-	public Long addBill(BillRequestModel billRequest) {
+	public Bill addBill(BillRequestModel billRequest) {
 
 		Bill bill = new Bill(billRequest.paid, billRequest.billType,
 				secondPartyService.getById(billRequest.secondParty));
-		bill.setItems(processBillItems(billRequest.items, billRequest.billType));
+		bill.setItems(createBillItems(billRequest.items, billRequest.billType));
 		bill.calculateBill();
 
 		billRepo.save(bill);
 
-		Long id = bill.getId();
-		return id;
+		return bill;
 	}
 
 	@Transactional
-	private Collection<BillItem> processBillItems(Collection<BillItemRequestModel> items, BillType type) {
+	public Bill updateBill(BillRequestModel request) {
+		Bill bill = billRepo.findById(request.id)
+				.orElseThrow(() -> new ResourceNotFoundException(request.id, Bill.class));
+		bill.setSecondParty(secondPartyService.getById(request.secondParty));
+		bill.setItems(updateBillItems(request.items, bill));
+		bill.calculateBill();
+		return bill;
+	}
+
+	@Transactional
+	private Collection<BillItem> createBillItems(Collection<BillItemRequestModel> items, BillType type) {
 		return items.stream().map(type.equals(BillType.SELL) ? this::createSoldBillItem : this::createBoughtBillItem)
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	private BillItem createSoldBillItem(BillItemRequestModel item) {
-		Bulk bulk = bulkService.subtractQuantity(new BulkRequestModel(item.id,item.price,item.quantity,item.product));
+		Bulk bulk = bulkService
+				.subtractQuantity(new BulkRequestModel(item.bulk, item.price, item.quantity, item.product));
 		return new BillItem(item.price, item.quantity, bulk);
 
 	}
@@ -78,10 +87,31 @@ public class BillService {
 		if (item.newBulk && !bulkService.existsByPriceAndproduct_ProductId(item.price, item.product)) {
 			bulk = bulkService.addBulk(new BulkRequestModel(item.price, item.quantity, item.product));
 		} else {
-			bulk = bulkService.addQuantity(new BulkRequestModel(item.id, item.price, item.quantity, item.product));
+			bulk = bulkService.addQuantity(new BulkRequestModel(item.bulk, item.price, item.quantity, item.product));
 		}
 		return new BillItem(bulk.getBuyPrice(), item.quantity, bulk);
 
+	}
+
+	@Transactional
+	private Collection<BillItem> updateBillItems(Collection<BillItemRequestModel> newItems, Bill bill) {
+		bill.getItems().stream()
+				.forEach(bill.getBillType().equals(BillType.SELL) ? this::rollBackSoldBillItem : this::rollBackBoughtBillItem);
+		billRepo.deleteBill_itemsById(bill.getId());
+		return newItems.stream().map(bill.getBillType().equals(BillType.SELL) ? this::createSoldBillItem : this::createBoughtBillItem)
+				.collect(Collectors.toCollection(ArrayList::new));
+	}
+
+	private void rollBackSoldBillItem(BillItem item) {
+		Bulk itemBulk = item.getBulk();
+		bulkService.addQuantity(
+				new BulkRequestModel(itemBulk.getId(), null, itemBulk.getQuantity(), null));
+	}
+
+	private void rollBackBoughtBillItem(BillItem item) {
+		Bulk itemBulk = item.getBulk();
+		bulkService.subtractQuantity(
+				new BulkRequestModel(itemBulk.getId(), null, itemBulk.getQuantity(), null));
 	}
 
 	@Autowired
