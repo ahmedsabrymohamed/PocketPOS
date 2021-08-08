@@ -1,4 +1,4 @@
-package com.pocket.pos.model;
+package com.pocket.pos.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -26,7 +26,7 @@ public class BillItem {
 
 
 	public BillItem(Double price, Double quantity, Bulk bulk) {
-		super();
+
 		this.price = price;
 		this.quantity = quantity;
 		this.bulk = bulk;

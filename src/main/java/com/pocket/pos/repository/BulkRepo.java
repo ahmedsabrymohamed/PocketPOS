@@ -6,12 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.pocket.pos.model.Bulk;
+import com.pocket.pos.entity.Bulk;
 
 
 public interface BulkRepo extends PagingAndSortingRepository<Bulk, Long>{
 	
-	public Page<Bulk> findByDeletedAndProduct_Id(boolean deleted,Long id, Pageable pageable);
+	public Page<Bulk> findByDeletedAndProduct_Id(boolean deleted, Long id, Pageable pageable);
 	
 	public Page<Bulk> findByDeleted(boolean deleted, Pageable pageable);
 	

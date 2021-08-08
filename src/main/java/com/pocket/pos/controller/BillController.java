@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pocket.pos.exception.ApiSimpleResponse;
-import com.pocket.pos.model.assembler.BillSecondPartyOnlyAssembler;
-import com.pocket.pos.model.assembler.BillWithoutRelationsAssembler;
-import com.pocket.pos.projections.BillSecondPartyOnlyProjection;
-import com.pocket.pos.projections.BillWithoutRelationsProjection;
-import com.pocket.pos.requestModel.BillRequestModel;
+import com.pocket.pos.assembler.BillSecondPartyOnlyAssembler;
+import com.pocket.pos.assembler.BillWithoutRelationsAssembler;
+import com.pocket.pos.projection.BillSecondPartyOnlyProjection;
+import com.pocket.pos.projection.BillWithoutRelationsProjection;
+import com.pocket.pos.model.BillModel;
 import com.pocket.pos.service.BillService;
 import com.pocket.pos.util.ResponseEntityBuilder;
 
@@ -80,7 +80,7 @@ public class BillController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> addBill(@RequestBody BillRequestModel bill) {
+	public ResponseEntity<?> addBill(@RequestBody BillModel bill) {
 		Long id = billService.addBill(bill).getId();
 		return ResponseEntity //
 				.created(linkTo(methodOn(BillController.class).getBillById(id)).withSelfRel().toUri())
@@ -90,8 +90,8 @@ public class BillController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateBill(@PathVariable("id") Long id, @RequestBody BillRequestModel bill) {
-		bill.id = id;
+	public ResponseEntity<?> updateBill(@PathVariable("id") Long id, @RequestBody BillModel bill) {
+		bill.setBillId(id);
 		billService.updateBill(bill);
 		return ResponseEntity //
 				.created(linkTo(methodOn(BillController.class).getBillById(id)).withSelfRel().toUri())

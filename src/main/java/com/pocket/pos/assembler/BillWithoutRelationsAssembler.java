@@ -1,4 +1,4 @@
-package com.pocket.pos.model.assembler;
+package com.pocket.pos.assembler;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -8,7 +8,7 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.pocket.pos.controller.BillController;
-import com.pocket.pos.projections.BillWithoutRelationsProjection;
+import com.pocket.pos.projection.BillWithoutRelationsProjection;
 
 @Component
 public class BillWithoutRelationsAssembler implements

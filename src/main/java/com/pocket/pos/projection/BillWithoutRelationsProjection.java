@@ -1,8 +1,8 @@
-package com.pocket.pos.projections;
+package com.pocket.pos.projection;
 
 import java.time.LocalDateTime;
 
-import com.pocket.pos.model.BillType;
+import com.pocket.pos.entity.BillType;
 
 public interface BillWithoutRelationsProjection extends BillProjection {
 	

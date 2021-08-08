@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pocket.pos.exception.ResourceNotFoundException;
-import com.pocket.pos.model.BillSecondParty;
+import com.pocket.pos.entity.BillSecondParty;
 import com.pocket.pos.repository.BillSecondPartyRepo;
 
 @Service

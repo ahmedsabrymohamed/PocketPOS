@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pocket.pos.model.BillSecondParty;
-import com.pocket.pos.model.assembler.BillSecondPartyAssembler;
+import com.pocket.pos.entity.BillSecondParty;
+import com.pocket.pos.assembler.BillSecondPartyAssembler;
 import com.pocket.pos.service.BillSecondPartyService;
 
 @CrossOrigin

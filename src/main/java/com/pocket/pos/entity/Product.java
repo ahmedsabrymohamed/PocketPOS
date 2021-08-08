@@ -1,4 +1,4 @@
-package com.pocket.pos.model;
+package com.pocket.pos.entity;
 
 import java.time.LocalDate;
 
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "pos_product")
-public class Product extends ModelCommons {
+public class Product extends EntityCommons {
 
 	@Column(nullable = false,unique = true)
 	private String name;

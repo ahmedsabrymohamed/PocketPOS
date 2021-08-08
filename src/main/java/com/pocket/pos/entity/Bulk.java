@@ -1,4 +1,4 @@
-package com.pocket.pos.model;
+package com.pocket.pos.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "pos_bulk",uniqueConstraints = {@UniqueConstraint(columnNames = {"buy_price","product_id"})})
 
-public class Bulk extends ModelCommons {
+public class Bulk extends EntityCommons {
 
 	@Column(nullable = false,name = "buy_price")
 	private Double buyPrice;

@@ -1,4 +1,4 @@
-package com.pocket.pos.model;
+package com.pocket.pos.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="pos_bill")
-public  class Bill extends ModelCommons {
+public  class Bill extends EntityCommons {
 	
 	@Column(nullable = false)
 	private Double total;

@@ -1,4 +1,4 @@
-package com.pocket.pos.model;
+package com.pocket.pos.entity;
 
 public enum Role {
 	SUPERADMIN,

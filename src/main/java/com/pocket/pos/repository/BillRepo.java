@@ -6,10 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.pocket.pos.model.Bill;
-import com.pocket.pos.model.BillType;
-import com.pocket.pos.projections.BillSecondPartyOnlyProjection;
-import com.pocket.pos.projections.BillWithoutRelationsProjection;
+import com.pocket.pos.entity.Bill;
+import com.pocket.pos.entity.BillType;
+import com.pocket.pos.projection.BillSecondPartyOnlyProjection;
+import com.pocket.pos.projection.BillWithoutRelationsProjection;
 
 
 public interface BillRepo extends PagingAndSortingRepository<Bill, Long> {

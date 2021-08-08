@@ -1,4 +1,4 @@
-package com.pocket.pos.model;
+package com.pocket.pos.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "pos_bill_second_party")
-public class BillSecondParty extends ModelCommons{
+public class BillSecondParty extends EntityCommons {
 	
 	@Column(nullable = false)
 	private String name;
